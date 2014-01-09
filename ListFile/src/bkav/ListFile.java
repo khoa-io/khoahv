@@ -2,7 +2,7 @@ package bkav;
 
 import java.io.File;
 import java.io.IOException;
-import adt.KNode;
+import adt.*;
 
 public class ListFile {
 
@@ -28,32 +28,7 @@ public class ListFile {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		KNode<String> listOfText = new KNode<String>();
 		
-		for (long i = 1; i <= 5; i++) {
-			listOfText.add("This is " + i);
-		}
-		listOfText.addAfter(4, "Xâu này phải ở vị trí số 5");
-
-		listOfText.setData(4, "Hoàng Văn Khoa");
-		System.out.println("Danh sách: ");
-		for (KNode<?> it = listOfText; !it.isLast(); it = it.getNext()) {
-			System.out.println("[" + it.getNext().getIndex() + ":"
-					+ it.getNext().getData() + "]");
-		}
-		System.out.println("Size before take = " + listOfText.size());
-
-		System.out.println("Thử nghiệm: ");
-		for (; listOfText.get(1) != null; ) {
-			long index = listOfText.get(1).getIndex();
-			String str = listOfText.takeLast();
-			System.out.println("[" + index + ":"
-					+ str + "]");
-		}
-
-		System.out.println("Size after take = " + listOfText.size());
-		System.out.println();
-
 	}
-
 }
+

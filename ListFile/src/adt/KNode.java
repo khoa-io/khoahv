@@ -27,6 +27,8 @@ package adt;
  * @author KhoaHV
  * @version 1.0
  * @see Object
+ * @see KQueue
+ * @see KStack
  */
 public class KNode<T> {
 
@@ -177,6 +179,7 @@ public class KNode<T> {
 	public KNode<T> getBefore(long index) {
 		if (index <= 0 || index > size())
 			return null;
+		//if (this.index == index) return this;
 		for (KNode<T> it = this; !it.isLast(); it = it.next) {
 			if (it.next.index == index)
 				return it;
@@ -214,6 +217,7 @@ public class KNode<T> {
 	public KNode<T> get(long index) {
 		if (index <= 0 || index > size())
 			return null;
+		if (this.index == index) return this;
 		for (KNode<T> it = this; !it.isLast(); it = it.next) {
 			if (it.next.index == index)
 				return it.next;
@@ -397,3 +401,4 @@ public class KNode<T> {
 	}
 
 }
+

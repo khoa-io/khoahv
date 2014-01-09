@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/adt/KNode.java=UTF-8
+encoding//src/adt/KQueue.java=UTF-8
+encoding//src/adt/KStack.java=UTF-8
 encoding//src/bkav/ListFile.java=UTF-8
