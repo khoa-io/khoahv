@@ -37,17 +37,4 @@ public class ListFile {
 		}
 		return list;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		File entry = new File(".");
-		KNode<?> list = listFile(entry);
-		System.out.println("Number of file(s) and folder(s): " + list.size());
-		for (KNode<?> it = list; !it.isLast(); it = it.getNext()) {
-			System.err.println("[" + it.getNext().getIndex() + ":" + it.getNext().getData() + "]");
-		}
-	}
 }
