@@ -6,7 +6,7 @@ import adt.*;
 
 public class ListFile {
 
-	public static KNode<String> listFile(File entry) {
+	public static KNode<String> listFileUseStack(File entry) {
 		KNode<String> list = new KNode<String>();
 		try {
 			if (!entry.exists()) {
@@ -33,6 +33,34 @@ public class ListFile {
 		} catch (FullStackException e) {
 			System.err.println("Error: " + e);
 		} catch (EmptyStackException e) {
+			System.err.println("Error: " + e);
+		}
+		return list;
+	}
+	
+	public static KNode<String> listFileUseQueue(File entry) {
+		KNode<String> list = new KNode<String>();
+		try {
+			if (!entry.exists()) {
+				System.out.println(entry.getName() + " not found!");
+				return null;
+			}
+			KQueue<File> q = new KQueue<File>();
+			File f = new File(entry.getCanonicalPath());
+			q.enQueue(f);
+			while (!q.isEmpty()) {
+				f = q.deQueue();
+				list.add(f.getAbsolutePath());
+				System.out.println(f.getAbsolutePath());
+				if (f.isDirectory()) {
+					String sarr[] = f.list();
+					for (int i = 0; i < sarr.length; i++) {
+						q.enQueue(new File(f.getAbsolutePath(), sarr[i]));
+						//System.out.println(s.top());
+					}
+				}
+			}
+		} catch (IOException | EmptyQueueException e) {
 			System.err.println("Error: " + e);
 		}
 		return list;
