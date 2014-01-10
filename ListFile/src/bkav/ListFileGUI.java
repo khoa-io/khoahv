@@ -5,29 +5,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
-
-import adt.EmptyQueueException;
-import adt.EmptyStackException;
-import adt.FullStackException;
 import adt.KNode;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
+
 import java.awt.CardLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class ListFileGUI {
+public class ListFileGUI extends Thread {
 
 	// TODO: Attributes
+	private ListFileGUI listFileGui;
 	private JFrame frmListFileGui;
 	private JTextField textPath;
 	private KNode<String> list;
@@ -38,6 +35,11 @@ public class ListFileGUI {
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JList<String> listOfFile;
+	private JButton btnStop;
+	private ListFile listFileThread;
+	private JButton btnUpdateList;
+	private JButton btnGetPath;
+	private String path;
 
 	/**
 	 * Launch the application.
@@ -60,9 +62,11 @@ public class ListFileGUI {
 	 */
 	public ListFileGUI() {
 		// TODO:
-		initialize();
-		list = null;
 		listModel = new DefaultListModel<String>();
+		initialize();
+		list = new KNode<String>();
+		listFileThread = new ListFile();
+		listFileGui = this;
 	}
 
 	/**
@@ -84,79 +88,58 @@ public class ListFileGUI {
 
 		lblPath = new JLabel("Path");
 		lblPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPath.setBounds(10, 11, 46, 54);
+		lblPath.setBounds(10, 11, 46, 23);
 		frmListFileGui.getContentPane().add(lblPath);
 
 		textPath = new JTextField();
 		textPath.setToolTipText("Enter path to list");
 		textPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textPath.setBounds(66, 9, 200, 56);
+		textPath.setBounds(66, 9, 163, 23);
 		frmListFileGui.getContentPane().add(textPath);
 		textPath.setColumns(10);
 
-		listModel = new DefaultListModel<String>();
+		//listModel = new DefaultListModel<String>();
 
-		listModel.addElement("");
+		//listModel.addElement("");
 
 		btnListUseStack = new JButton("List using Stack");
 		btnListUseStack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO: Xử lí sự kiện click chuột vào nút "List using Stack"
+				btnStop.setEnabled(true);
+				btnListUseQueue.setEnabled(false);
+				btnUpdateList.setEnabled(true);
+				btnListUseStack.setEnabled(false);
 				try {
-					if (textPath.getText().equalsIgnoreCase(new String())) {
+					path = textPath.getText();
+					if (path.equalsIgnoreCase(new String())) {
 						JOptionPane.showMessageDialog(frmListFileGui,
 								"Path cannot be null", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						listModel.removeAllElements();
-						File f = new File(textPath.getText());
+						File f = new File(path);
 						JOptionPane.showMessageDialog(frmListFileGui,
 								f.getAbsolutePath(), "Path",
 								JOptionPane.INFORMATION_MESSAGE);
-
-						list = ListFile.listFileUseStack(f);
-
-						for (KNode<String> it = list; !it.isLast(); it = it
-								.getNext()) {
-							listModel.addElement(it.getNext().getData());
-
-							listOfFile.setModel(listModel);
-						}
-
+						listFileThread = new ListFile();
+						listFileThread.setArguments(listFileGui,
+								path, true, list);
+						listFileThread.start();
 					}
 				} catch (NullPointerException e) {
 					JOptionPane.showMessageDialog(frmListFileGui,
 							"Need run Java Applicaton as Administrator !\n"
 									+ "Detail: " + e.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(frmListFileGui, "The path \""
-							+ textPath.getText() + "\" isn't exist !"
-							+ "\nDetail: " + e.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} catch (FullStackException e) {
-					JOptionPane.showMessageDialog(frmListFileGui,
-							"Runtime error !" + "\nDetail: " + e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				} catch (EmptyStackException e) {
-					JOptionPane.showMessageDialog(frmListFileGui,
-							"Runtime error !" + "\nDetail: " + e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(frmListFileGui,
-							"Runtime error !" + "\nDetail: " + e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
 				}
 			}
 		});
 
 		btnListUseStack.setToolTipText("Click to list");
 		btnListUseStack.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnListUseStack.setBounds(276, 8, 178, 23);
+		btnListUseStack.setBounds(294, 8, 160, 23);
 		frmListFileGui.getContentPane().add(btnListUseStack);
 
 		btnListUseQueue = new JButton("List using Queue");
@@ -164,56 +147,39 @@ public class ListFileGUI {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO: Xử lí sự kiện click chuột vào nút "List using Queue"
+
+				btnStop.setEnabled(true);
+				btnListUseQueue.setEnabled(false);
+				btnUpdateList.setEnabled(true);
+				btnListUseStack.setEnabled(false);
 				try {
-					if (textPath.getText().equalsIgnoreCase(new String())) {
+					path = textPath.getText();
+					if (path.equalsIgnoreCase(new String())) {
 						JOptionPane.showMessageDialog(frmListFileGui,
 								"Path cannot be null", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						listModel.removeAllElements();
-						File f = new File(textPath.getText());
+						File f = new File(path);
 						JOptionPane.showMessageDialog(frmListFileGui,
 								f.getAbsolutePath(), "Path",
 								JOptionPane.INFORMATION_MESSAGE);
-
-						list = ListFile.listFileUseQueue(f);
-
-						for (KNode<String> it = list; !it.isLast(); it = it
-								.getNext()) {
-							listModel.addElement(it.getNext().getData());
-
-							listOfFile.setModel(listModel);
-						}
-
+						listFileThread = new ListFile();
+						listFileThread.setArguments(listFileGui,
+								path, false, list);
+						listFileThread.start();
 					}
 				} catch (NullPointerException e) {
 					JOptionPane.showMessageDialog(frmListFileGui,
 							"Need run Java Applicaton as Administrator !\n"
 									+ "Detail: " + e.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(frmListFileGui, "The path \""
-							+ textPath.getText() + "\" isn't exist !"
-							+ "\nDetail: " + e.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} catch (IOException e) {
-
-					JOptionPane.showMessageDialog(frmListFileGui,
-							"Runtime error !" + "\nDetail: " + e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-				} catch (EmptyQueueException e) {
-
-					JOptionPane.showMessageDialog(frmListFileGui,
-							"Runtime error !" + "\nDetail: " + e.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
 				}
 			}
 		});
 		btnListUseQueue.setToolTipText("Click to list");
 		btnListUseQueue.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnListUseQueue.setBounds(276, 42, 178, 23);
+		btnListUseQueue.setBounds(294, 42, 160, 23);
 		frmListFileGui.getContentPane().add(btnListUseQueue);
 
 		panel = new JPanel();
@@ -227,6 +193,65 @@ public class ListFileGUI {
 		listOfFile = new JList<String>(listModel);
 		scrollPane.setViewportView(listOfFile);
 
+		btnStop = new JButton("Stop");
+		btnStop.setEnabled(false);
+		btnStop.addMouseListener(new MouseAdapter() {
+			// TODO: Đoạn xử lí sự kiện click vào nút "Stop"
+			@SuppressWarnings("deprecation")
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				listFileThread.stop();
+				btnStop.setEnabled(false);
+				btnListUseQueue.setEnabled(true);
+				btnListUseStack.setEnabled(true);
+				btnUpdateList.setEnabled(false);
+				updateList();
+			}
+		});
+		btnStop.setToolTipText("Click to stop");
+		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnStop.setBounds(66, 43, 80, 23);
+		frmListFileGui.getContentPane().add(btnStop);
+
+		btnUpdateList = new JButton("Update List");
+		btnUpdateList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				updateList();
+			}
+		});
+		btnUpdateList.setEnabled(false);
+		btnUpdateList.setBounds(156, 43, 128, 23);
+		frmListFileGui.getContentPane().add(btnUpdateList);
+		
+		btnGetPath = new JButton("...");
+		btnGetPath.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = chooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					path = chooser.getSelectedFile().getAbsolutePath();
+					textPath.setText(path);
+			    }
+			}
+		});
+		btnGetPath.setBounds(239, 9, 45, 23);
+		frmListFileGui.getContentPane().add(btnGetPath);
+
 	}
 
+	public void updateList() {
+		listModel.removeAllElements();
+		for (KNode<String> it = list; !it.isLast(); it = it.getNext()) {
+			listModel.addElement(it.getNext().getData());
+			listOfFile.setModel(listModel);
+		}
+	}
+	
+	public JFrame getForm() {
+		return frmListFileGui;
+	}
+	
 }
