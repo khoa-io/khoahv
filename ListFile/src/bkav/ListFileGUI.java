@@ -9,10 +9,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+
+import adt.EmptyQueueException;
+import adt.EmptyStackException;
+import adt.FullStackException;
 import adt.KNode;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
@@ -121,8 +127,29 @@ public class ListFileGUI {
 					}
 				} catch (NullPointerException e) {
 					JOptionPane.showMessageDialog(frmListFileGui,
-							"Need run Java Applicaton as Administrator !",
+							"Need run Java Applicaton as Administrator !\n"
+									+ "Detail: " + e.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(frmListFileGui, "The path \""
+							+ textPath.getText() + "\" isn't exist !"
+							+ "\nDetail: " + e.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (FullStackException e) {
+					JOptionPane.showMessageDialog(frmListFileGui,
+							"Runtime error !" + "\nDetail: " + e.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} catch (EmptyStackException e) {
+					JOptionPane.showMessageDialog(frmListFileGui,
+							"Runtime error !" + "\nDetail: " + e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(frmListFileGui,
+							"Runtime error !" + "\nDetail: " + e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -161,8 +188,26 @@ public class ListFileGUI {
 					}
 				} catch (NullPointerException e) {
 					JOptionPane.showMessageDialog(frmListFileGui,
-							"Need run Java Applicaton as Administrator !",
+							"Need run Java Applicaton as Administrator !\n"
+									+ "Detail: " + e.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(frmListFileGui, "The path \""
+							+ textPath.getText() + "\" isn't exist !"
+							+ "\nDetail: " + e.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (IOException e) {
+
+					JOptionPane.showMessageDialog(frmListFileGui,
+							"Runtime error !" + "\nDetail: " + e.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				} catch (EmptyQueueException e) {
+
+					JOptionPane.showMessageDialog(frmListFileGui,
+							"Runtime error !" + "\nDetail: " + e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
 				}
 			}
 		});
