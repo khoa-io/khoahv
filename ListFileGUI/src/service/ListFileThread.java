@@ -256,17 +256,4 @@ public class ListFileThread extends Thread {
 		super.start();
 	}
 
-	public static void main(String args[]) {
-		ListFileThread listFileThread = new ListFileThread();
-		DefaultListModel<String> list = new DefaultListModel<String>();
-		listFileThread.setParameter(
-				"C:\\Users\\KhoaHV\\Documents",
-				"folder", list);
-		try {
-			listFileThread.listFile();
-		} catch (FileNotFoundException | FullStackException
-				| EmptyStackException | IOException | EmptyQueueException e) {
-			e.printStackTrace();
-		}
-	}
 }

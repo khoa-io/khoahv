@@ -108,5 +108,11 @@ public class ListFileControl extends Thread {
 		listFileThread.doContinue();
 		super.resume();
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void stopListFile() {
+		listFileThread.doStop();
+		super.stop();
+	}
 
 }

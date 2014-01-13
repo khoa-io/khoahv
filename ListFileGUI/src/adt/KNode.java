@@ -331,8 +331,6 @@ public class KNode<T> {
 	 * @see KNode
 	 */
 	public long getIndex() {
-		if (this == null)
-			return -1;
 		return index;
 	}
 

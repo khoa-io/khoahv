@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class ListFileMain {
 
@@ -97,17 +98,20 @@ public class ListFileMain {
 		panelControl.setLayout(null);
 
 		JLabel lblPath = new JLabel("Path");
+		lblPath.setFont(new Font("Dialog", Font.BOLD, 11));
 		lblPath.setToolTipText("Path you want to scan");
 		lblPath.setBounds(10, 4, 62, 14);
 		panelControl.add(lblPath);
 
 		txtPath = new JTextField();
+		txtPath.setFont(new Font("Dialog", Font.PLAIN, 11));
 		txtPath.setBounds(82, 1, 189, 20);
 		txtPath.setText(path);
 		panelControl.add(txtPath);
 		txtPath.setColumns(10);
 
 		btnScanPauseResume = new JButton("Scan");
+		btnScanPauseResume.setFont(new Font("Dialog", Font.BOLD, 11));
 		btnScanPauseResume.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -133,10 +137,12 @@ public class ListFileMain {
 		panelControl.add(btnChoosePath);
 
 		JLabel lblOption = new JLabel("Option");
+		lblOption.setFont(new Font("Dialog", Font.BOLD, 11));
 		lblOption.setBounds(10, 29, 46, 14);
 		panelControl.add(lblOption);
 
 		chckbxHidden = new JCheckBox("Include hidden file");
+		chckbxHidden.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxHidden.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -144,17 +150,19 @@ public class ListFileMain {
 			}
 		});
 		chckbxHidden.setToolTipText("Check to include hidden file in result");
-		chckbxHidden.setBounds(82, 25, 140, 23);
+		chckbxHidden.setBounds(82, 25, 166, 23);
 		panelControl.add(chckbxHidden);
 
 		chckbxSystem = new JCheckBox("Include system file");
+		chckbxSystem.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxSystem.setEnabled(false);
 		chckbxSystem.setSelected(true);
 		chckbxSystem.setToolTipText("Check to include system file in result");
-		chckbxSystem.setBounds(258, 28, 140, 23);
+		chckbxSystem.setBounds(258, 28, 177, 23);
 		panelControl.add(chckbxSystem);
 
 		chckbxFolder = new JCheckBox("Include folder");
+		chckbxFolder.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxFolder.setSelected(true);
 		chckbxFolder.addMouseListener(new MouseAdapter() {
 			@Override
@@ -167,6 +175,7 @@ public class ListFileMain {
 		panelControl.add(chckbxFolder);
 
 		chckbxUseAdtStack = new JCheckBox("Use ADT Stack");
+		chckbxUseAdtStack.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxUseAdtStack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -180,6 +189,7 @@ public class ListFileMain {
 		panelControl.add(chckbxUseAdtStack);
 
 		chckbxUseAdtQueue = new JCheckBox("Use ADT Queue");
+		chckbxUseAdtQueue.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxUseAdtQueue.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -191,6 +201,7 @@ public class ListFileMain {
 		panelControl.add(chckbxUseAdtQueue);
 
 		chckbxAllFile = new JCheckBox("Include all file");
+		chckbxAllFile.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxAllFile.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -202,6 +213,7 @@ public class ListFileMain {
 		panelControl.add(chckbxAllFile);
 
 		chckbxNormal = new JCheckBox("Just include normal file");
+		chckbxNormal.setFont(new Font("Dialog", Font.BOLD, 11));
 		chckbxNormal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -213,6 +225,7 @@ public class ListFileMain {
 		panelControl.add(chckbxNormal);
 		
 		btnStop = new JButton("Stop");
+		btnStop.setFont(new Font("Dialog", Font.BOLD, 11));
 		btnStop.setEnabled(false);
 		btnStop.addMouseListener(new MouseAdapter() {
 			@Override
@@ -225,6 +238,7 @@ public class ListFileMain {
 		panelControl.add(btnStop);
 		
 		btnUpdateList = new JButton("Update list");
+		btnUpdateList.setFont(new Font("Dialog", Font.BOLD, 11));
 		btnUpdateList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -248,7 +262,7 @@ public class ListFileMain {
 		// listResult = new JList<String>(listModelResult);
 		listResult = new JList<String>();
 		scrollPane.setViewportView(listResult);
-		// listResult.setModel(listModelResult);
+		listResult.setModel(listModelResult);
 
 		JPanel panelIntro = new JPanel();
 		panelIntro.setBounds(10, 405, 604, 25);
@@ -481,19 +495,18 @@ public class ListFileMain {
 	 * <li>Bước 2: Giải phóng tài nguyên.
 	 * 
 	 */
-	@SuppressWarnings("deprecation")
 	public void clickOnBtnStop() {
 		btnStop.setEnabled(false);
 		btnUpdateList.setEnabled(false);
 		btnChoosePath.setEnabled(true);
 		setCheckBoxEnable(true);
 		btnScanPauseResume.setText("Scan");
-		control.stop();
+		control.stopListFile();
 		updateList();
 	}
 	
 	public synchronized void updateList() {
-		listResult.setModel(listModelResult);
+		//listResult.setModel(listModelResult);
 	}
 	
 	public void resetList() {
