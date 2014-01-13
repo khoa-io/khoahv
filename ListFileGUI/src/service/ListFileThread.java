@@ -131,6 +131,12 @@ public class ListFileThread extends Thread {
 				continue;
 			if (f.isDirectory() && !includeFolder && !firstTime)
 				continue;
+			try {
+				sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			synchronized(listResult) {
 				listResult.addElement(f.getAbsolutePath());	
 			}
@@ -163,6 +169,12 @@ public class ListFileThread extends Thread {
 				continue;
 			if (f.isDirectory() && !includeFolder && !firstTime)
 				continue;
+			try {
+				sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			synchronized(listResult) {
 				listResult.addElement(f.getAbsolutePath());	
 			}
