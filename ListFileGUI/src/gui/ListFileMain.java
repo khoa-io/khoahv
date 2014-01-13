@@ -155,6 +155,7 @@ public class ListFileMain {
 		panelControl.add(chckbxSystem);
 
 		chckbxFolder = new JCheckBox("Include folder");
+		chckbxFolder.setSelected(true);
 		chckbxFolder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -207,7 +208,6 @@ public class ListFileMain {
 				clickOnChckbxNormal();
 			}
 		});
-		chckbxNormal.setSelected(true);
 		chckbxNormal.setToolTipText("Just include normal file in the result");
 		chckbxNormal.setBounds(258, 54, 336, 23);
 		panelControl.add(chckbxNormal);
