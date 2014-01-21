@@ -1,8 +1,0 @@
-eclipse.preferences.version=1
-encoding//src/adt/KNode.java=UTF-8
-encoding//src/adt/KQueue.java=UTF-8
-encoding//src/adt/KStack.java=UTF-8
-encoding//src/control/ListFileControl.java=UTF-8
-encoding//src/gui/ListFileAbout.java=UTF-8
-encoding//src/gui/ListFileMain.java=UTF-8
-encoding//src/service/ListFileThread.java=UTF-8
