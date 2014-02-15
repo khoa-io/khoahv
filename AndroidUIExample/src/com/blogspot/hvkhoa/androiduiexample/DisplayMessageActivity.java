@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DisplayMessageActivity extends Activity {
 
@@ -22,7 +27,17 @@ public class DisplayMessageActivity extends Activity {
 	    textView.setText(message);
 
 	    // Set the text view as the activity layout
-	    setContentView(textView);
+	    setContentView(R.layout.activity_display_message);
+	    
+	    GridView gridview = (GridView) findViewById(R.id.gridview);
+	    gridview.setAdapter(new ImageAdapter(this));
+
+	    gridview.setOnItemClickListener(new OnItemClickListener() {
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+	            Toast.makeText(DisplayMessageActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+	        }
+	    });
+
 	}
 
 	@Override
