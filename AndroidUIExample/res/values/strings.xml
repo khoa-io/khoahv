@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroidUIExample</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Welcome to Android Programming</string>
+    <string name="enter_your_name">Enter your name: </string>
+    <string name="name">Name: </string>
+    <string name="tap">Tap</string>
+    <string name="reminder">Reminder</string>
+    <string name="done">Done</string>
+    <string name="send">Send</string>
+    <string name="title_activity_display_message">DisplayMessageActivity</string>
+    <string name="title_activity_list_view_loader">ListViewLoader</string>
+
+</resources>
